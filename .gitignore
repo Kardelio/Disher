@@ -1,3 +1,7 @@
+.idea/deploymentTargetDropDown.xml
+.idea/gradle.xml
+.idea/inspectionProfiles/Project_Default.xml
+
 *.iml
 .gradle
 /local.properties
