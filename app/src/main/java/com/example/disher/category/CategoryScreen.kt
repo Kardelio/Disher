@@ -28,6 +28,7 @@ fun CategoryScreen(
     viewmodel: CategoryViewModel = hiltViewModel(),
     onCategoryClick: (String) -> Unit
 ) {
+//    val navController by rememberNavController()
     val listOfCategories by remember { viewmodel.listOfCategories }
 
     LazyColumn {
