@@ -25,10 +25,11 @@ import com.example.disher.category.viewmodel.CategoryViewModel
 
 @Composable
 fun CategoryScreen(
-    viewmodel: CategoryViewModel = hiltViewModel(),
+    viewModel: CategoryViewModel = hiltViewModel(),
     onCategoryClick: (String) -> Unit
 ) {
-    val listOfCategories by remember { viewmodel.listOfCategories }
+
+    val listOfCategories by remember { viewModel.listOfCategories }
 
     LazyColumn {
         items(listOfCategories) { item ->
