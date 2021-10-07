@@ -15,11 +15,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DishViewModel @Inject constructor(useCase: IDishesUseCase) : ViewModel() {
+class DishViewModel @Inject constructor(val useCase: IDishesUseCase) : ViewModel() {
 
     private val _listOfDish: MutableState<List<Dish>> = mutableStateOf(emptyList())
     val listOfDish: State<List<Dish>> = _listOfDish
-    val useCase = useCase
+
 
 
     fun getAllDish(selectedCategory: String){
