@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Disher</string>
+    <string name="title_activity_dish_list">DishList</string>
 </resources>
