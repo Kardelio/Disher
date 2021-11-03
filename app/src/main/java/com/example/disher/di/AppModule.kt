@@ -5,6 +5,11 @@ import com.example.disher.category.repository.ICategoryRepository
 import com.example.disher.category.service.ICategoryService
 import com.example.disher.category.usecase.GetCategoriesUseCase
 import com.example.disher.category.usecase.IGetCategoriesUseCase
+import com.example.disher.detail.repository.DetailRepository
+import com.example.disher.detail.repository.IDetailRepository
+import com.example.disher.detail.service.IDetailService
+import com.example.disher.detail.usecase.GetDetailsUseCase
+import com.example.disher.detail.usecase.IGetDetailsUseCase
 import com.example.disher.dishes.repository.DishesRepository
 import com.example.disher.dishes.repository.IDishesRepository
 import com.example.disher.dishes.service.IDishesService
@@ -46,6 +51,12 @@ class AppModule {
         return retrofit.create(IDishesService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideDetailService(retrofit: Retrofit): IDetailService {
+        return retrofit.create(IDetailService::class.java)
+    }
+
     @Module
     @InstallIn(SingletonComponent::class)
     interface AppModuleInt {
@@ -57,6 +68,14 @@ class AppModule {
         @Binds
         @Singleton
         fun provideGetDishesUseCase(uc: GetDishesUseCase): IGetDishesUseCase
+
+        @Binds
+        @Singleton
+        fun provideDetailRepo(repo: DetailRepository): IDetailRepository
+
+        @Binds
+        @Singleton
+        fun provideGetDetailUseCase(uc: GetDetailsUseCase): IGetDetailsUseCase
 
         @Binds
         @Singleton

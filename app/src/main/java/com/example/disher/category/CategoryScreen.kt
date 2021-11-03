@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,7 +32,7 @@ fun CategoryScreen(
 
     LazyColumn {
         items(listOfCategories) { item ->
-            SingleCategoryItem(item){
+            SingleItem(item.strCategory, item.strCategoryThumb) {
                 onItemClick(it)
             }
         }
@@ -42,23 +41,24 @@ fun CategoryScreen(
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun SingleCategoryItem(
-    category: Category,
+fun SingleItem(
+    title: String,
+    thumbnail: String,
     onClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .clickable { onClick(category.strCategory) }, elevation = 8.dp
+            .clickable { onClick(title) }, elevation = 8.dp
     ) {
         Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Image(
                 modifier = Modifier.size(80.dp), painter = rememberImagePainter(
-                    category.strCategoryThumb
+                    thumbnail
                 ), contentDescription = null
             )
-            Text(text = category.strCategory, fontSize = 24.sp)
+            Text(text = title, fontSize = 24.sp)
         }
     }
 
