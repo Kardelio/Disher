@@ -6,7 +6,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.disher.db.DisherDao
 import com.example.disher.detail.model.MealDetail
+import com.example.disher.detail.model.convertToSmaller
 import com.example.disher.detail.usecase.IGetDetailsUseCase
 import com.example.disher.dishes.viewmodel.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    val usecase: IGetDetailsUseCase
+    val usecase: IGetDetailsUseCase,
+    val dao: DisherDao
 ) : ViewModel() {
 
     private val _meal: MutableState<MealDetail?> = mutableStateOf(null)
@@ -23,16 +26,25 @@ class DetailViewModel @Inject constructor(
 
     //TODO
     fun getDetailsForDishId(id: String) {
-        Log.d("BK","$id")
+        Log.d("BK", "$id")
         viewModelScope.launch {
             try {
                 val mealDetailResponse = usecase(id)
-                Log.d("BK","${mealDetailResponse.meals[0].strMeal}")
-                _meal.value = mealDetailResponse.meals[0]
+                Log.d("BK", "${mealDetailResponse.meals[0].strMeal}")
+                val meal = mealDetailResponse.meals[0]
+                _meal.value = meal
             } catch (e: Exception) {
                 Log.d("BK", "Exception ${e.message}")
             }
         }
+    }
+
+    fun saveToFavourites(mealDetail: MealDetail){
+       viewModelScope.launch {
+           for(i in 0..1000){
+               dao.saveMeal(mealDetail.convertToSmaller())
+           }
+       }
     }
 
 }
