@@ -3,12 +3,16 @@ package com.example.disher.detail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -38,7 +42,7 @@ fun DetailScreen(
     val uriHandler = LocalUriHandler.current
 
     singleDish?.let {
-        Column {
+        Column(modifier = Modifier) {
             Text(it.strMeal)
             Text(it.strArea)
             //TODO ic_heart_outline
@@ -86,18 +90,28 @@ fun InstructionTextBlock(modifier: Modifier = Modifier, instructions: String) {
     var showmore by remember {
         mutableStateOf(false)
     }
+    val scrollState = rememberScrollState()
     Column(
         modifier = modifier
-            .padding(16.dp)
+            .padding(8.dp)
             .fillMaxWidth()
+            .verticalScroll(scrollState)
+
     ) {
-        Box(modifier = Modifier
+        Text(modifier = Modifier
             .`if`(!showmore) {
                 height(100.dp)
             }
-        ) {
-            Text(instructions)
-        }
+            .`if`(!showmore) {
+                drawWithContent {
+                    val colors = listOf(Color.Transparent, Color.White)
+                    drawContent()
+                    drawRect(
+                        brush = Brush.verticalGradient(colors)
+                    )
+                }
+            }, text = instructions
+        )
         Button(onClick = {
             showmore = !showmore
         }) {
