@@ -12,6 +12,7 @@ import com.example.disher.detail.model.convertToSmaller
 import com.example.disher.detail.usecase.IGetDetailsUseCase
 import com.example.disher.dishes.viewmodel.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,11 +28,12 @@ class DetailViewModel @Inject constructor(
     //TODO
     fun getDetailsForDishId(id: String) {
         Log.d("BK", "$id")
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val mealDetailResponse = usecase(id)
                 Log.d("BK", "${mealDetailResponse.meals[0].strMeal}")
                 val meal = mealDetailResponse.meals[0]
+                //TODO combine saved favourites too...
                 _meal.value = meal
             } catch (e: Exception) {
                 Log.d("BK", "Exception ${e.message}")
@@ -41,9 +43,7 @@ class DetailViewModel @Inject constructor(
 
     fun saveToFavourites(mealDetail: MealDetail){
        viewModelScope.launch {
-           for(i in 0..1000){
-               dao.saveMeal(mealDetail.convertToSmaller())
-           }
+           dao.saveMeal(mealDetail.convertToSmaller())
        }
     }
 

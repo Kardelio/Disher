@@ -1,2 +1,9 @@
 https://github.com/Kardelio/Disher/issues/8
 It would be nice, once the meal information is retrieved from the remote service to be available to the users locally, even when the mobile device is offline.
+
+
+* Add screenshots to readme
+* publish to play store
+* setup CI
+* refactor into seperate modules
+* local persistance (room)

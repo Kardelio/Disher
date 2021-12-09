@@ -20,6 +20,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -57,13 +59,20 @@ class AppModule {
         return retrofit.create(IDetailService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideDispatcher(): CoroutineDispatcher {
+        return Dispatchers.IO
+    }
+
     @Module
     @InstallIn(SingletonComponent::class)
     interface AppModuleInt {
 
         @Binds
         @Singleton
-        fun provideDishesRepository(repo: DishesRepository): IDishesRepository
+        fun provideDishesRepository(
+            repo: DishesRepository): IDishesRepository
 
         @Binds
         @Singleton
