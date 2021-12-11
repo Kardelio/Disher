@@ -26,12 +26,10 @@ fun DisherNavigation() {
         }
 
         composable(
-            route = "${Dishes.route}/{selectedCategory}",
-            arguments = listOf(navArgument("selectedCategory") { type = NavType.StringType })
-        ) { navBackStackEntry ->
-            navBackStackEntry.arguments?.getString("selectedCategory")?.let { category ->
-                DishesScreen(selectedCategory = category)
-            }
+            route = "${Dishes.route}/{${Dishes.CATEGORY}}",
+            arguments = listOf(navArgument(Dishes.CATEGORY) { type = NavType.StringType })
+        ) {
+            DishesScreen()
         }
 
         composable(route = DishDetail.route) {

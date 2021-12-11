@@ -9,12 +9,8 @@ import com.example.disher.category.viewmodel.DishViewModel
 private const val TAG = "DishesScreen"
 
 @Composable
-fun DishesScreen(
-    selectedCategory: String,
-    viewModel: DishViewModel = hiltViewModel()
-) {
+fun DishesScreen(viewModel: DishViewModel = hiltViewModel()) {
 
-    viewModel.getAllDish(selectedCategory = selectedCategory)
     Text(text = viewModel.listOfDish.value.toString())
 
 
